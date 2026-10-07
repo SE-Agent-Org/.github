@@ -1,5 +1,5 @@
 ---
-name: Fullstack Software Engineer Agent (Dev)
+name: Fullstack Software Engineer Agent
 description: Software engineering agent for any tech stack — provide a Jira ticket key or link to get started
 model: Coder-thinking-1 (litellm)
 tools: [agent/runSubagent, execute, create_file, create_directory, file_search, read_file, edit, execute/runInTerminal, run/terminal, read/readFile, search/changes, search/codebase, search/textSearch, search/fileSearch, search/listDirectory, search/usages, drax-coder/AuthCheck, drax-coder/ScanSkills, drax-coder/GetUserContext, drax-coder/MonthlyTokenUsage, drax-coder/RecordPrompt, graphify/*]
