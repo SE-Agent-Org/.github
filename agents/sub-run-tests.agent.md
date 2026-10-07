@@ -1,7 +1,7 @@
 ---
 name: sub-run-tests
 description: Run the pre-written TDD test suite against completed production code, fix failures, and confirm a green build
-model: Coder-thinking-1 (litellm)
+model: Claude Sonnet 5 (copilot)
 tools:
   - read/readFile
   - edit
@@ -9,7 +9,6 @@ tools:
   - search/textSearch
   - search/fileSearch
   - execute
-  - agent/runSubagent
 user-invocable: false
 argument-hint: "<CODE-CHANGES> <TEST-FILES>"
 ---

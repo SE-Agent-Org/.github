@@ -1,7 +1,7 @@
 ---
 name: sub-write-code
 description: Implement a feature in a codebase, in any language or framework, following an approved implementation plan
-model: Coder-thinking-1 (litellm)
+model: Claude Sonnet 5 (copilot)
 tools:
   - read/readFile
   - edit
@@ -10,7 +10,6 @@ tools:
   - search/fileSearch
   - search/usages
   - execute
-  - agent/runSubagent
 user-invocable: false
 argument-hint: "<PLAN> <TICKET-DATA> <CODEBASE-SUMMARY>"
 ---

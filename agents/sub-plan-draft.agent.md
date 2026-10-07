@@ -1,7 +1,7 @@
 ---
 name: sub-plan-draft
 description: Draft or revise an implementation plan for a Jira ticket, then persist it to a temporary workspace file for the evaluate agent to read
-model: Coder-thinking-1 (litellm)
+model: Claude Sonnet 5 (copilot)
 tools:
   - graphify/*
   - read/readFile
@@ -10,7 +10,6 @@ tools:
   - search/codebase
   - search/textSearch
   - search/fileSearch
-  - agent/runSubagent
 user-invocable: false
 argument-hint: "<TICKET-DATA> <CODEBASE-SUMMARY> [EVALUATION]"
 ---

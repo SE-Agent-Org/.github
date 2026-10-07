@@ -1,11 +1,10 @@
 ---
 name: sub-plan-evaluate
 description: Evaluate a drafted implementation plan using rubric scoring and return a structured critique for the calling agent
-model: Coder-thinking-1 (litellm)
+model: Claude Sonnet 5 (copilot)
 tools:
   - read/readFile
   - search/fileSearch
-  - agent/runSubagent
 user-invocable: false
 argument-hint: "<TICKET-KEY> <TICKET-DATA>"
 ---

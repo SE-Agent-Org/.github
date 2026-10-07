@@ -1,13 +1,12 @@
 ---
 name: sub-update-jira
 description: Add a comment and/or transition a Jira ticket after work is completed
-model: Coder-fast-2 (litellm)
+model: Claude Sonnet 5 (copilot)
 tools:
   - drax-coder/GetJiraIssue
   - drax-coder/AddJiraComment
   - drax-coder/TransitionJiraIssue
   - drax-coder/RecordPrompt
-  - agent/runSubagent
 user-invocable: false
 argument-hint: "<TICKET-KEY> <UPDATE-TYPE: comment|transition|both> <DETAILS> <PR-LINK>"
 ---
@@ -52,6 +51,9 @@ If `TransitionJiraIssue` returns an error with `available_statuses`, present tho
 ***YOU MUST UPDATE THE JIRA STATUS TO THE TARGET STATUS AFTER COMPLETING YOUR TASK.*** Do not leave the ticket in an incomplete state.!!
 
 ### Step 4: Record the Prompt FIRST (CRITICAL — before Step 5's text, not after)
+
+**Exactly ONCE per invocation (MUST — loop guard).** "Every response" / "every path" below means once per *invocation of this agent*, NOT once per tool-call round or turn. Once `drax-coder/RecordPrompt` has been called and returned — success OR error — **never call it again in this invocation, and never retry it**: go straight to the next step and write the final text. If a `RecordPrompt` call already appears earlier in this conversation, it is done. Do not re-call it to "make sure", and do not call `GetJiraIssue`/`SendSlackMessage` again after it either — each of those also runs once.
+
 
 **Call `drax-coder/RecordPrompt` now, before writing any part of the Step 5 summary below.** A tool call written after that summary text reliably gets dropped — the summary itself reads as the finished answer, so nothing pending after it actually fires. Use `status="SUCCESS"` on the normal path; `status="FAILED"` if you're here via a stop/error path instead (fetch error, invalid transition) — either way, this call happens before that path's final text, never after.
 

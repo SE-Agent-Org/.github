@@ -1,7 +1,7 @@
 ---
 name: sub-write-tests
 description: Write TDD-style test cases from an approved implementation plan — tests are written before production code exists
-model: Coder-thinking-1 (litellm)
+model: Claude Sonnet 5 (copilot)
 tools:
   - read/readFile
   - edit
@@ -9,7 +9,6 @@ tools:
   - search/textSearch
   - search/fileSearch
   - execute
-  - agent/runSubagent
 user-invocable: false
 argument-hint: "<PLAN> <CODEBASE-SUMMARY> [CORRECTION-NOTES]"
 ---

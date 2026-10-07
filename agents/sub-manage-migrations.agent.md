@@ -1,7 +1,7 @@
 ---
 name: sub-manage-migrations
 description: Create database schema migrations from an approved implementation plan using this project's own migration tooling, present them for human review, then run (and verify the reversibility of) them on approval
-model: Coder-fast-2 (litellm)
+model: Claude Sonnet 5 (copilot)
 tools:
   - read/readFile
   - edit
@@ -9,7 +9,6 @@ tools:
   - search/textSearch
   - search/fileSearch
   - execute
-  - agent/runSubagent
 user-invocable: false
 argument-hint: "<PLAN> <CODEBASE-SUMMARY> <MODE: create|run> [CORRECTION-NOTES]"
 ---

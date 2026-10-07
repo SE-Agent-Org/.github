@@ -1,14 +1,13 @@
 ---
 name: sub-code-review
 description: Review code changes, in any language or framework, against the ticket requirements and codebase conventions, and return structured feedback
-model: Coder-thinking-1 (litellm)
+model: Claude Sonnet 5 (copilot)
 tools:
   - read/readFile
   - search/changes
   - search/codebase
   - search/textSearch
   - execute
-  - agent/runSubagent
 user-invocable: false
 argument-hint: "<TICKET-DATA> <CODE-CHANGES-SUMMARY>"
 ---
