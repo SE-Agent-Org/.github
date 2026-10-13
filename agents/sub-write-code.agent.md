@@ -1,7 +1,7 @@
 ---
 name: sub-write-code
 description: Implement a feature in a codebase, in any language or framework, following an approved implementation plan
-model: Claude Sonnet 5 (copilot)
+model: Coder-thinking-1 (litellm)
 tools:
   - read/readFile
   - edit

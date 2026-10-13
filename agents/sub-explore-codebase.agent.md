@@ -1,7 +1,7 @@
 ---
 name: sub-explore-codebase
 description: Explore a codebase, in any language or framework, and return a structured summary of relevant files, projects, and patterns for a given task
-model: Claude Sonnet 5 (copilot)
+model: Coder-thinking-1 (litellm)
 tools:
   - graphify/*
   - search/fileSearch
@@ -9,7 +9,7 @@ tools:
   - search/listDirectory
   - search/usages
   - read/readFile
-  - run/terminal
+  - execute/runInTerminal
 user-invocable: false
 argument-hint: "<TASK-DESCRIPTION>"
 ---

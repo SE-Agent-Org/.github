@@ -1,7 +1,7 @@
 ---
 name: sub-generate-docs
 description: Generate or update Confluence documentation for a completed feature, in any language or framework, based on a Jira ticket and code changes
-model: Claude Sonnet 5 (copilot)
+model: Coder-fast-2 (litellm)
 tools:
   - drax-coder/GetConfluencePage
   - drax-coder/CreateConfluencePage

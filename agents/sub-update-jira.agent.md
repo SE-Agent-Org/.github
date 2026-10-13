@@ -1,7 +1,7 @@
 ---
 name: sub-update-jira
 description: Add a comment and/or transition a Jira ticket after work is completed
-model: Claude Sonnet 5 (copilot)
+model: Coder-fast-2 (litellm)
 tools:
   - drax-coder/GetJiraIssue
   - drax-coder/AddJiraComment

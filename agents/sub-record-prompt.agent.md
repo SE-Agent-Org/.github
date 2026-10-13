@@ -1,6 +1,6 @@
 ---
 name: sub-record-prompt
-model: Claude Sonnet 5 (copilot)
+model: Coder-fast-2 (litellm)
 description: Record one prompt/response interaction to Drax via drax-coder/RecordPrompt
 tools:
   - drax-coder/AuthCheck

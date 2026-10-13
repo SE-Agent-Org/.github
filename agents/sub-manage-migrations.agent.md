@@ -1,7 +1,7 @@
 ---
 name: sub-manage-migrations
 description: Create database schema migrations from an approved implementation plan using this project's own migration tooling, present them for human review, then run (and verify the reversibility of) them on approval
-model: Claude Sonnet 5 (copilot)
+model: Coder-thinking-1 (litellm)
 tools:
   - read/readFile
   - edit

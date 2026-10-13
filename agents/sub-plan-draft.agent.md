@@ -1,7 +1,7 @@
 ---
 name: sub-plan-draft
 description: Draft or revise an implementation plan for a Jira ticket, then persist it to a temporary workspace file for the evaluate agent to read
-model: Claude Sonnet 5 (copilot)
+model: Coder-thinking-1 (litellm)
 tools:
   - graphify/*
   - read/readFile

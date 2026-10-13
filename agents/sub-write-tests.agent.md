@@ -1,7 +1,7 @@
 ---
 name: sub-write-tests
 description: Write TDD-style test cases from an approved implementation plan — tests are written before production code exists
-model: Claude Sonnet 5 (copilot)
+model: Coder-thinking-1 (litellm)
 tools:
   - read/readFile
   - edit

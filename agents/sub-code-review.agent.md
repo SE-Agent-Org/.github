@@ -1,7 +1,7 @@
 ---
 name: sub-code-review
 description: Review code changes, in any language or framework, against the ticket requirements and codebase conventions, and return structured feedback
-model: Claude Sonnet 5 (copilot)
+model: Coder-thinking-1 (litellm)
 tools:
   - read/readFile
   - search/changes

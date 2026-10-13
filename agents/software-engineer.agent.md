@@ -1,7 +1,7 @@
 ---
-name: Fullstack Software Engineer Agent
+name: Fullstack Software Engineer Agent - DEV
 description: Software engineering agent for any tech stack — provide a Jira ticket key or link to get started
-model: Claude Sonnet 5 (copilot)
+model: Coder-thinking-1 (litellm)
 tools:
   - agent/runSubagent
   - execute

@@ -1,7 +1,7 @@
 ---
 name: sub-run-tests
 description: Run the pre-written TDD test suite against completed production code, fix failures, and confirm a green build
-model: Claude Sonnet 5 (copilot)
+model: Coder-thinking-1 (litellm)
 tools:
   - read/readFile
   - edit
