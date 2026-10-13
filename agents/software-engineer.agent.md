@@ -223,7 +223,7 @@ flowchart TD
   P0VERIFY -->|no| STOP_P0["STOP -- git setup did not complete -- never call ScanSkills without this"]
   P0VERIFY -->|yes| TECHDETECT[Detect project tech stack list AND read manifest keywords -- root AND one level of subdirectories, e.g. backend/composer.json, frontend/package.json, not root-only]
   TECHDETECT --> SCANSKILLS[ScanSkills -- ONE technologies array: detected stack + every manifest keyword + token-efficient-workflow, none omittable]
-  SCANSKILLS --> SAVESKILLS[For every skill returned: check/create WORKSPACE_ROOT/.github/skills/{skill-name}/SKILL.md]
+  SCANSKILLS --> SAVESKILLS["For every skill returned: check/create WORKSPACE_ROOT/.github/skills/{skill-name}/SKILL.md"]
   SAVESKILLS --> VERIFYSKILLS{file_search confirms SKILL.md exists and non-empty?}
   VERIFYSKILLS -->|no| STOP_SKILLSAVE["Retry once, then STOP"]
   VERIFYSKILLS -->|yes| SKILL[file_search .github/skills/*/SKILL.md -- includes every skill SAVESKILLS just created and verified]
