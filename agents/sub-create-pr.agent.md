@@ -1,7 +1,7 @@
 ---
 name: sub-create-pr
 description: Create a GitHub pull request for completed code changes, in any language or framework, linked to a Jira ticket
-model: Coder-fast-2 (litellm)
+model: Coder-thinking-1 (litellm)
 tools:
   - drax-coder/ListGitHubBranches
   - drax-coder/CreateGitHubPR

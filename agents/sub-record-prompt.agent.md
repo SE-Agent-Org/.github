@@ -1,6 +1,6 @@
 ---
 name: sub-record-prompt
-model: Coder-fast-2 (litellm)
+model: Coder-thinking-1 (litellm)
 description: Record one prompt/response interaction to Drax via drax-coder/RecordPrompt
 tools:
   - drax-coder/AuthCheck
@@ -14,12 +14,15 @@ argument-hint: "<STATUS> <PROMPT-TEXT> <RESPONSE-TEXT> [TOOL] [ERROR-MESSAGE] [R
 
 ## 🚨 CRITICAL — TOOL INVOCATION RULES (NON-NEGOTIABLE)
 
+**Tool name equivalence (READ FIRST — prevents infinite loops):** `drax-coder/AuthCheck`, `drax-coder/GetUserContext`, and `drax-coder/RecordPrompt` are the CANONICAL names, but your runtime exposes them under a DIFFERENT prefix: `mcp_agent_force_m_AuthCheck`, `mcp_agent_force_m_GetUserContext`, `mcp_agent_force_m_RecordPrompt`. **These are the SAME tools.** When you call `mcp_agent_force_m_AuthCheck` and it returns, the `drax-coder/AuthCheck` step is COMPLETE — do NOT look for or call any differently-named variant. A returned result from the prefixed name fully satisfies the canonically-named step. Treat any tool whose name ends in `AuthCheck` / `GetUserContext` / `RecordPrompt` as that step, regardless of prefix.
+
 Before calling ANY tool, verify:
-1. **Tool namespace is correct:** `drax-coder/RecordPrompt` (not just `RecordPrompt`)
+1. **Tool identity is matched by suffix, not exact name:** a tool ending in `RecordPrompt` IS `drax-coder/RecordPrompt`, whatever its prefix
 2. **All required parameters are provided:** `promptText`, `response`, and `status` are mandatory
 3. **Parameter values are not placeholders:** Use the actual values passed in by the caller, never `{PROMPT-TEXT}` or `{STATUS}`
 4. **Tool is invoked via the tool system, not text:** Do NOT write "I will record this" and then stop — actually invoke the tool
 5. **If tool invocation fails,** return the error to the calling agent — do NOT retry, do NOT skip, do NOT proceed without confirmation
+6. **One returned result = step done:** the instant a call of the right suffix returns (success OR error), that step is finished forever in this invocation — never re-issue it looking for a better-named match
 
 ## Why this agent exists
 
@@ -47,10 +50,10 @@ The caller passes:
 
 ## Steps
 
-**Tool identity.** `drax-coder/<ToolName>` is the canonical name. If your runtime exposes it prefixed — e.g. `mcp_agent_force_m_AuthCheck`, `mcp_agent_force_m_RecordPrompt` — that is the SAME tool, and calling it fully satisfies the step. Never call a tool twice looking for a differently-named one; name it as `drax-coder/<ToolName>` in your output. **Each tool in this agent runs exactly once — never retry a call that already returned, error or not.**
+**Tool identity.** `drax-coder/<ToolName>` is the canonical name. Your runtime exposes it prefixed — e.g. `mcp_agent_force_m_AuthCheck`, `mcp_agent_force_m_GetUserContext`, `mcp_agent_force_m_RecordPrompt` — and **that prefixed tool IS the canonical tool.** Match tools by their `<ToolName>` suffix, never by exact string. Calling the prefixed name fully and permanently satisfies the step; name it as `drax-coder/<ToolName>` in your output. **Never call a tool twice looking for a differently-named one — the prefixed call already was the real call. Each tool in this agent runs exactly once — never retry a call that already returned, error or not.**
 
-1. **Authenticate — FIRST ACTION, EXACTLY ONE `AuthCheck` CALL.** Call `drax-coder/AuthCheck` exactly once, as the very first tool call of this invocation, before anything else. If it is unavailable, or if it fails, **STOP the entire execution**: return `STATUS: FAILED` with the error and do NOT call `RecordPrompt`, `GetUserContext`, or any other tool. Once `AuthCheck` has returned — success OR failure — never call it again in this invocation and never retry it.
-2. **Identify** — call `drax-coder/GetUserContext` to obtain `userId` (GitHub login), `userEmail`, `userName`, `userAvatarUrl`. If authentication fails, return `STATUS: FAILED` with the error and stop — do not call `RecordPrompt` with invented identity fields.
+1. **Authenticate — FIRST ACTION, EXACTLY ONE `AuthCheck` CALL.** Call the `AuthCheck` tool (any prefix) exactly once, as the very first tool call of this invocation, before anything else. **The moment ANY `*AuthCheck` call returns — success OR failure — authentication is done: never call AuthCheck (under any name) again in this invocation, and never retry it.** If it is unavailable, or if it fails, **STOP the entire execution**: return `STATUS: FAILED` with the error and do NOT call `RecordPrompt`, `GetUserContext`, or any other tool.
+2. **Identify — EXACTLY ONE `GetUserContext` CALL.** Call the `GetUserContext` tool (any prefix) exactly once to obtain `userId` (GitHub login), `userEmail`, `userName`, `userAvatarUrl`. **The moment ANY `*GetUserContext` call returns, this step is done: never call it again in this invocation.** If authentication fails, return `STATUS: FAILED` with the error and stop — do not call `RecordPrompt` with invented identity fields.
 3. **Call `drax-coder/RecordPrompt`** with the authenticated identity fields plus every input above, mapped as: `promptText` ← `PROMPT-TEXT`, `response` ← `RESPONSE-TEXT`, `status` ← `STATUS`, `tool` ← `TOOL` (or `"AgentForce"`), `errorMessage` ← `ERROR-MESSAGE` (only when `STATUS` is `FAILED`), `responseMetadata` ← `RESPONSE-METADATA`, `litellmCallId` ← `LITELLM-CALL-ID`.
 4. **Return the structured result below** — only after the tool call has actually been made and returned.
 

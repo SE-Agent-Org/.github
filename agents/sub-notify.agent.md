@@ -5,6 +5,7 @@ tools:
   - drax-coder/SendSlackMessage
   - drax-coder/RecordPrompt
 user-invocable: false
+model: Coder-thinking-1 (litellm)
 argument-hint: "<ACTION> <JIRA-TICKET-KEY> [PR-LINK] [EXTRA-DETAILS]"
 ---
 
